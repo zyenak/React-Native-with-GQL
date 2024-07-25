@@ -1,24 +1,24 @@
-// src/config/apollo-client.ts
-
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { ApolloClient, InMemoryCache, createHttpLink, split } from '@apollo/client';
 import { setContext } from '@apollo/client/link/context';
 import { GraphQLWsLink } from '@apollo/client/link/subscriptions';
 import { createClient } from 'graphql-ws';
 import { getMainDefinition } from '@apollo/client/utilities';
+import { API_URL, WS_URL } from '@env'; // Import the environment variables
 
 const createApolloClient = async () => {
   const token = await AsyncStorage.getItem('token');
-  console.log("Token: ", token)
+  console.log("Token: ", token);
+  console.log(API_URL)
 
   // HTTP connection to the API
   const httpLink = createHttpLink({
-    uri: 'http://10.0.0.113:4000/graphql',
+    uri: API_URL,
   });
 
   // WebSocket link to handle subscriptions
   const wsLink = new GraphQLWsLink(createClient({
-    url: 'ws://10.0.0.113:4000/subscription',
+    url: WS_URL, 
     connectionParams: {
       authentication: token,
     },
@@ -30,7 +30,7 @@ const createApolloClient = async () => {
       headers: {
         ...headers,
         authorization: token ? `Bearer ${token}` : '',
-      }
+      },
     };
   });
 
