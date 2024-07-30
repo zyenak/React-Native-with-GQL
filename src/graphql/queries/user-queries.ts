@@ -23,13 +23,7 @@ export const GET_USER = gql`
       id
       username
       role
-      borrowedBooks {
-        isbn
-        name
-        category
-        price
-        quantity
-      }
+      
     }
   }
 `;

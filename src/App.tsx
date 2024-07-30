@@ -5,6 +5,7 @@ import createApolloClient from './config/apollo-client';
 import { NavigationContainer } from '@react-navigation/native';
 import RNBootSplash from 'react-native-bootsplash';
 import StackNavigator from './navigation/StackNavigator';
+import { UserProvider } from "./context/user-context";
 
 const App: React.FC = () => {
   const [client, setClient] = useState<ApolloClient<any> | null>(null);
@@ -25,9 +26,13 @@ const App: React.FC = () => {
 
   return (
     <ApolloProvider client={client}>
-      <NavigationContainer>
-        <StackNavigator />
-      </NavigationContainer>
+      <UserProvider>
+        <NavigationContainer>
+
+          <StackNavigator />
+
+        </NavigationContainer>
+      </UserProvider>
     </ApolloProvider>
   );
 };

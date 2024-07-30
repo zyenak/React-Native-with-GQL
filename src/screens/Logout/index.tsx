@@ -1,4 +1,4 @@
-// src/screens/logout/index.tsx
+import { useUser } from '../../context/user-context';
 import React, { useEffect } from 'react';
 import { View, Text, ActivityIndicator } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -15,10 +15,12 @@ type LogoutScreenNavigationProp = StackNavigationProp<RootStackParamList, 'Login
 
 const LogoutScreen: React.FC = () => {
   const navigation = useNavigation<LogoutScreenNavigationProp>();
+  const { setUser } = useUser();
 
   useEffect(() => {
     const logout = async () => {
-      await AsyncStorage.removeItem('token');
+      await AsyncStorage.removeItem('token'); 
+      setUser(null);
       navigation.replace('Login');
     };
 
